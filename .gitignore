@@ -1,0 +1,22 @@
+# Entorno virtual
+venv/
+.env
+
+# Archivos compilados
+__pycache__/
+*.pyc
+
+# Base de datos local
+*.db
+
+# Archivos de logs o temporales
+*.log
+
+# Cache de editores
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# Archivos específicos
+seed_output.txt
