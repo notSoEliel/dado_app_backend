@@ -1,6 +1,6 @@
 # Backend - FastAPI (Login y Registro de Puntos)
 
-Este backend provee una API REST construida con **FastAPI**, conectada a una base de datos **SQLite**. Proporciona autenticación simple (sin registro) y permite guardar puntos asociados a usuarios preexistentes.
+Este backend provee una API REST construida con **FastAPI**, conectada a una base de datos **SQLite**. Proporciona autenticación simple (sin registro) y permite guardar puntos asociados a usuarios preexistentes. El puntaje se asigna solo la primera vez que el usuario inicia sesión y se actualiza directamente (no se crean múltiples registros).
 
 ---
 
@@ -22,23 +22,30 @@ Response (éxito):
 
 {
   "id": 1,
-  "nombre_completo": "Eliel García"
+  "nombre_completo": "Eliel García",
+  "puntos": 1000
 }
 
 ```
 
 ---
 
-### `POST /registro_de_puntos`
+### `POST /lanzar_dado`
 
-Registra un puntaje para un usuario dado.
+Realiza un lanzamiento de dado. Resta 100 puntos. Si el resultado es 6, suma 500.
 
 **Request Body:**
-
 ```json
 {
-  "usuario_id": 1,
-  "cantidad_puntos": 1000
+  "usuario_id": 1
+}
+```
+
+**Response:**
+```json
+{
+  "resultado": 4,
+  "puntos_actuales": 900
 }
 ```
 
@@ -51,7 +58,7 @@ backend/
 ├── main.py            # Entrypoint de FastAPI
 ├── database.py        # Conexión SQLite + Session
 ├── models.py          # Modelos ORM con SQLAlchemy
-├── crud.py            # Lógica de negocio (login, registrar puntos)
+├── crud.py            # Lógica de negocio (login, lanzar dado)
 ├── seed.py            # Precarga de usuarios
 
 ```
@@ -64,7 +71,7 @@ backend/
 
 ```bash
 pip install uv
-uv add fastapi uvicorn sqlalchemy
+uv sync
 ```
 
 ### 2. Crear la base de datos y precargar usuarios:

@@ -1,6 +1,6 @@
 from database import Base, engine, SessionLocal
-from models import Usuario, RegistroDePuntos
-from datetime import datetime
+from models import Usuario
+
 
 Base.metadata.create_all(bind=engine)
 
@@ -21,18 +21,10 @@ def cargar_usuarios():
     db.add_all(usuarios)
     db.commit()
 
-    # IMPORTANTE: Ahora que tienen ID, creamos registros de puntos
-    for usuario in usuarios:
-        registro = RegistroDePuntos(
-            cantidad_puntos=1000,
-            usuario_id=usuario.id,
-            fecha_registro=datetime.utcnow()
-        )
-        db.add(registro)
+    # Solo se crean los usuarios. Los puntos iniciales se asignan al iniciar sesión.
 
-    db.commit()
     db.close()
-    print("✅ Usuarios y puntos iniciales cargados.")
+    print("✅ Usuarios precargados.")
 
 if __name__ == "__main__":
     cargar_usuarios()
