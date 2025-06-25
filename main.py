@@ -133,3 +133,21 @@ def lanzar_dado(data: LanzarDadoRequest, db: Session = Depends(get_db)):
     db.commit()
 
     return {"resultado": resultado, "puntos_actuales": nuevos_puntos}
+
+
+@app.get("/obtener_puntos")
+def obtener_puntos(usuario_id: int, db: Session = Depends(get_db)):
+    """
+    Endpoint para obtener los puntos actuales de un usuario.
+    Recibe el usuario_id como parámetro de consulta.
+    Devuelve los puntos actuales del usuario.
+    """
+    # Busca el último registro de puntos del usuario
+    ultimo_registro = (
+        db.query(RegistroDePuntos)
+        .filter(RegistroDePuntos.usuario_id == usuario_id)
+        .order_by(RegistroDePuntos.fecha_registro.desc())
+        .first()
+    )
+    puntos_actuales = ultimo_registro.cantidad_puntos if ultimo_registro else 0
+    return {"usuario_id": usuario_id, "puntos_actuales": puntos_actuales}

@@ -51,6 +51,28 @@ Realiza un lanzamiento de dado. Resta 100 puntos. Si el resultado es 6, suma 500
 
 ---
 
+### `GET /obtener_puntos`
+
+Obtiene los puntos actuales de un usuario.
+
+**Parámetros de consulta:**
+- `usuario_id` (int): ID del usuario a consultar.
+
+**Ejemplo de request:**
+```
+GET /obtener_puntos?usuario_id=1
+```
+
+**Response:**
+```json
+{
+  "usuario_id": 1,
+  "puntos_actuales": 900
+}
+```
+
+---
+
 ## 📦 Estructura del Proyecto
 
 ```markdown
